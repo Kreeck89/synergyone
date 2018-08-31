@@ -23,8 +23,8 @@ public class ClientController {
         return clientService.findAll();
     }
 
-    @GetMapping(value = "/getById")
-    public @ResponseBody Client getById(@RequestParam Long id) {
+    @GetMapping(value = "/getById/{id}")
+    public @ResponseBody Client getById(@PathVariable("id") Long id) {
         return clientService.clientDataById(id).get();
     }
 
