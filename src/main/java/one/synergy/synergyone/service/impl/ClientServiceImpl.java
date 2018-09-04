@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class ClientServiceImpl implements ClientService {
 
+    private final ClientRepository clientRepository;
+
     @Autowired
-    private ClientRepository clientRepository;
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public List<Client> findAll() {
@@ -31,8 +35,19 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClientById(Long id) {
-        Optional<Client> byId = clientRepository.findById(id);
-        return byId.map(client -> clientRepository.saveAndFlush(client)).orElse(null);
+    public Client updateClientById(Long id, Client client) {
+        return clientRepository.findById(id)
+                .map(newClient -> {
+                    newClient.setName(client.getName());
+                    newClient.setSurname(client.getSurname());
+                    newClient.setSex(client.getSex());
+                    newClient.setBirthday(client.getBirthday());
+                    newClient.setItn(client.getItn());
+                    return clientRepository.save(newClient);
+                })
+                .orElseGet(() -> {
+                    client.setId(id);
+                    return clientRepository.save(client);
+                });
     }
 }

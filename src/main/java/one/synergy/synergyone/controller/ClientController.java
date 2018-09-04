@@ -24,7 +24,8 @@ public class ClientController {
     }
 
     @GetMapping(value = "/getById/{id}")
-    public @ResponseBody Client getById(@PathVariable("id") Long id) {
+    public @ResponseBody
+    Client getById(@PathVariable("id") Long id) {
         return clientService.clientDataById(id).get();
     }
 
@@ -33,8 +34,12 @@ public class ClientController {
         return clientService.createNewClient(client);
     }
 
-    @PutMapping(value = "/updateClient")
-    public Client updateClient(@RequestParam Long id) {
-        return clientService.updateClientById(id);
+    @PutMapping(value = "/updateClient/{id}")
+    public @ResponseBody
+    Client updateClient(@RequestBody Client client,
+                        @PathVariable("id") Long id) {
+        System.out.println(id);
+        System.out.println(client);
+        return clientService.updateClientById(id, client);
     }
 }

@@ -12,5 +12,5 @@ public interface ClientService {
 
     Client createNewClient(Client client);
 
-    Client updateClientById(Long id);
+    Client updateClientById(Long id, Client client);
 }

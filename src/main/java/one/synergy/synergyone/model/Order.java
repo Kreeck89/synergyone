@@ -1,12 +1,18 @@
 package one.synergy.synergyone.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
+//@Builder
+@DynamicUpdate
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id
@@ -20,4 +26,5 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
 }
